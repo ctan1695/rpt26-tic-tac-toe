@@ -1,0 +1,61 @@
+
+
+.top-row > div, .middle-row > div, .bottom-row > div {
+  float: left;
+  width: 10%;
+  padding-left: 10%;
+  padding-right: 5%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.top-left-square {
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.top-middle-square {
+  border-bottom: 5px solid black;
+  border-left: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.top-right-square {
+  border-left: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.middle-left-square {
+  border-top: 5px solid black;
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.middle-middle-square {
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  border-left: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.middle-right-square {
+  border-top: 5px solid black;
+  border-left: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.bottom-left-square {
+  border-top: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.bottom-middle-square {
+  border-top: 5px solid black;
+  border-left: 5px solid black;
+  border-right: 5px solid black;
+}
+
+.bottom-right-square {
+  border-top: 5px solid black;
+  border-left: 5px solid black;
+}
