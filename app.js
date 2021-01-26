@@ -1,6 +1,4 @@
 
-//(f1) function to check if the board has a row of all X's or O's
-
 /* Keep track of every div square on the board */
 var topLeft = document.querySelector('.top-left-square');
 var topMiddle = document.querySelector('.top-middle-square');
@@ -29,7 +27,6 @@ var onSquareClick = (event) => {
   latestSquareValue = event.target.innerHTML;
 
   var result = getCurrentBoard();
-  console.log('getCurrentBoard(): ', result);
   checkWinner(result);
 }
 
@@ -43,6 +40,21 @@ middleRight.addEventListener('click', onSquareClick);
 bottomLeft.addEventListener('click', onSquareClick);
 bottomMiddle.addEventListener('click', onSquareClick);
 bottomRight.addEventListener('click', onSquareClick);
+
+/* Clear the board */
+var clearBoard = () => {
+  topLeft.innerHTML = '&nbsp;'
+  topMiddle.innerHTML = '&nbsp;'
+  topRight.innerHTML = '&nbsp;'
+  middleLeft.innerHTML = '&nbsp;'
+  middleMiddle.innerHTML = '&nbsp;'
+  middleRight.innerHTML = '&nbsp;'
+  bottomLeft.innerHTML = '&nbsp;'
+  bottomMiddle.innerHTML = '&nbsp;'
+  bottomRight.innerHTML = '&nbsp;'
+}
+
+document.querySelector('button').addEventListener('click', clearBoard);
 
 /* Return the current tic tac toe board with X's and O's */
 var getCurrentBoard = () => {
@@ -71,16 +83,8 @@ var getCurrentBoard = () => {
   return board;
 }
 
-//check if there is an X
-var checkForX = () => {
-
-}
-
-//check if there is an O
-
-//on a click, also call function f1 to check if there's a winner
+/* Check if the inputted board has a winner */
 var checkWinner = (board) => {
-  //board is an array.
   var squaresWithX = {
                       rows: [],
                       columns: []
@@ -89,28 +93,24 @@ var checkWinner = (board) => {
                       rows: [],
                       columns: []
                     };
+  var countPlacedSquares = 0;
 
-  //Loop through each row of the board
+
   for (var r = 0; r < board.length; r++) {
     var row = board[r];
-    //For each row of board, loop through each column.
     for (var c = 0; c < row.length; c++) {
       var squareValue = row[c];
       var squarePosition = [];
       if (squareValue === 'X') {
         squaresWithX.rows.push(r);
         squaresWithX.columns.push(c);
-        // squarePosition.push(r);
-        // squarePosition.push(c);
-        // squaresWithX.push(squarePosition);
+        countPlacedSquares++;
       }
 
       if (squareValue === 'O') {
         squaresWithO.rows.push(r);
         squaresWithO.columns.push(c);
-        // squarePosition.push(r);
-        // squarePosition.push(c);
-        // squaresWithO.push(squarePosition);
+        countPlacedSquares++;
       }
     }
   }
@@ -139,7 +139,6 @@ var checkWinner = (board) => {
     2: 0
   };
 
-  /* X */
   if (squaresWithX.rows.length >= 3) {
 
     for (var xRow = 0; xRow < squaresWithX.rows.length; xRow++) {
@@ -164,75 +163,23 @@ var checkWinner = (board) => {
 
   }
 
-  // if (countXRowWinner[0] >= 1 && countXRowWinner[1] >= 1 && countXRowWinner[2] >= 1 && countXColumnWinner[0] >= 1 && countXColumnWinner[1] >= 1 && countXColumnWinner[2] >= 1) {
-  //   alert('X won diagonally!');
-  // } else if (countORowWinner[0] >= 1 && countORowWinner[1] >= 1 && countORowWinner[2] >= 1 && countOColumnWinner[0] >= 1 && countOColumnWinner[1] >= 1 && countOColumnWinner[2] >= 1) {
-  //   alert('O won diagonally!');
-  // }
-  if (countXRowWinner[0] >= 1 && countXRowWinner[0] === countXRowWinner[1] && countXRowWinner[0] === countXRowWinner[2] && countXColumnWinner[0] >= 1 && countXColumnWinner[0] === countXColumnWinner[1] && countXColumnWinner[0] === countXColumnWinner[2]) {
-    alert('X won diagonally!');
+  if (
+    (countXRowWinner[0] >= 1 && countXRowWinner[0] === countXRowWinner[1] && countXRowWinner[0] === countXRowWinner[2] && countXColumnWinner[0] >= 1 && countXColumnWinner[0] === countXColumnWinner[1] && countXColumnWinner[0] === countXColumnWinner[2])
+    || (countXRowWinner[0] === 3 || countXRowWinner[1] === 3 || countXRowWinner[2] === 3)
+    || (countXColumnWinner[0] === 3 || countXColumnWinner[1] === 3 || countXColumnWinner[2] === 3 )) {
+    document.body.append(document.createElement('div').innerHTML = 'Game Over! Congratulations, Player X, you are the winner!');
+  } else if (
+    (countORowWinner[0] >= 1 && countORowWinner[0] === countORowWinner[1] && countORowWinner[0] === countORowWinner[2] && countOColumnWinner[0] >= 1 && countOColumnWinner[0] === countOColumnWinner[1] && countOColumnWinner[0] === countOColumnWinner[2])
+    || (countORowWinner[0] === 3 || countORowWinner[1] === 3 || countORowWinner[2] === 3)
+    || (countOColumnWinner[0] === 3 || countOColumnWinner[1] === 3 || countOColumnWinner[2] === 3 )
+  ) {
+    document.body.append(document.createElement('div').innerHTML = 'Game Over! Congratulations, Player O, you are the winner!');
   }
 
-  //Diagonal win
-
-  console.log('countXColumnWinner: ', countXColumnWinner);
-  console.log('countXRowWinner: ', countXRowWinner);
-  console.log('countOColumnWinner: ', countOColumnWinner);
-  console.log('countORowWinner: ', countORowWinner);
-  console.log('squaresWithX: ', squaresWithX);
-  console.log('squaresWithO: ', squaresWithO);
+  if (countPlacedSquares === 9) {
+    document.body.append(document.createElement('div').innerHTML = 'Game Over! Congratulations, it\'s a tie!');
+  }
 }
 
-/*
-Keep track of where all the X's are
-Loop through the board.
-
-
-
-Keep track of where all the Y's are
-*/
-
-/* winning board example:
-  [
-    ['X', '', 'O'],
-    ['', 'X', 'O'],
-    ['', '',  'X'],
-  ];
-
-  -- winner in a diagonal
-  board[0][0]
-  board[1][1]
-  board[2][2]
-
-  board[0][2]
-  board[1][1]
-  board[2][0]
-
-  -- winner in a row
-  board[0][0]
-  board[0][1]
-  board[0][2]
-
-  board[1][0]
-  board[1][1]
-  board[1][2]
-
-  board[2][0]
-  board[2][1]
-  board[2][2]
-
-  -- winner in a column
-  board[0][0]
-  board[1][0]
-  board[2][0]
-
-  board[0][1]
-  board[1][1]
-  board[2][1]
-
-  board[0][2]
-  board[1][2]
-  board[2][2]
-*/
 
 //button to clear the board
