@@ -30,6 +30,7 @@ var onSquareClick = (event) => {
 
   var result = getCurrentBoard();
   console.log('getCurrentBoard(): ', result);
+  checkWinner(result);
 }
 
 /* Event listener on each square */
@@ -70,17 +71,132 @@ var getCurrentBoard = () => {
   return board;
 }
 
+//check if there is an X
+var checkForX = () => {
+
+}
+
+//check if there is an O
 
 //on a click, also call function f1 to check if there's a winner
 var checkWinner = (board) => {
   //board is an array.
+  var squaresWithX = {
+                      rows: [],
+                      columns: []
+                    };
+  var squaresWithO = {
+                      rows: [],
+                      columns: []
+                    };
+
+  //Loop through each row of the board
+  for (var r = 0; r < board.length; r++) {
+    var row = board[r];
+    //For each row of board, loop through each column.
+    for (var c = 0; c < row.length; c++) {
+      var squareValue = row[c];
+      var squarePosition = [];
+      if (squareValue === 'X') {
+        squaresWithX.rows.push(r);
+        squaresWithX.columns.push(c);
+        // squarePosition.push(r);
+        // squarePosition.push(c);
+        // squaresWithX.push(squarePosition);
+      }
+
+      if (squareValue === 'O') {
+        squaresWithO.rows.push(r);
+        squaresWithO.columns.push(c);
+        // squarePosition.push(r);
+        // squarePosition.push(c);
+        // squaresWithO.push(squarePosition);
+      }
+    }
+  }
+
+  var countXRowWinner = {
+    0: 0,
+    1: 0,
+    2: 0
+  };
+
+  var countXColumnWinner = {
+    0: 0,
+    1: 0,
+    2: 0
+  };
+
+  var countORowWinner = {
+    0: 0,
+    1: 0,
+    2: 0
+  };
+
+  var countOColumnWinner = {
+    0: 0,
+    1: 0,
+    2: 0
+  };
+
+  /* X */
+  if (squaresWithX.rows.length >= 3) {
+
+    for (var xRow = 0; xRow < squaresWithX.rows.length; xRow++) {
+      countXRowWinner[squaresWithX.rows[xRow]] = countXRowWinner[squaresWithX.rows[xRow]] + 1;
+    }
+
+    for (var xColumn = 0; xColumn < squaresWithX.columns.length; xColumn++) {
+      countXColumnWinner[squaresWithX.columns[xColumn]] = countXColumnWinner[squaresWithX.columns[xColumn]] + 1;
+    }
+
+  }
+
+  if (squaresWithO.rows.length >= 3) {
+
+    for (var oRow = 0; oRow < squaresWithO.rows.length; oRow++) {
+      countORowWinner[squaresWithO.rows[oRow]] = countORowWinner[squaresWithO.rows[oRow]] + 1;
+    }
+
+    for (var oColumn = 0; oColumn < squaresWithO.columns.length; oColumn++) {
+      countOColumnWinner[squaresWithO.columns[oColumn]] = countOColumnWinner[squaresWithO.columns[oColumn]] + 1;
+    }
+
+  }
+
+  // if (countXRowWinner[0] >= 1 && countXRowWinner[1] >= 1 && countXRowWinner[2] >= 1 && countXColumnWinner[0] >= 1 && countXColumnWinner[1] >= 1 && countXColumnWinner[2] >= 1) {
+  //   alert('X won diagonally!');
+  // } else if (countORowWinner[0] >= 1 && countORowWinner[1] >= 1 && countORowWinner[2] >= 1 && countOColumnWinner[0] >= 1 && countOColumnWinner[1] >= 1 && countOColumnWinner[2] >= 1) {
+  //   alert('O won diagonally!');
+  // }
+  if (countXRowWinner[0] >= 1 && countXRowWinner[0] === countXRowWinner[1] && countXRowWinner[0] === countXRowWinner[2] && countXColumnWinner[0] >= 1 && countXColumnWinner[0] === countXColumnWinner[1] && countXColumnWinner[0] === countXColumnWinner[2]) {
+    alert('X won diagonally!');
+  }
+
+  //Diagonal win
+
+  console.log('countXColumnWinner: ', countXColumnWinner);
+  console.log('countXRowWinner: ', countXRowWinner);
+  console.log('countOColumnWinner: ', countOColumnWinner);
+  console.log('countORowWinner: ', countORowWinner);
+  console.log('squaresWithX: ', squaresWithX);
+  console.log('squaresWithO: ', squaresWithO);
 }
+
+/*
+Keep track of where all the X's are
+Loop through the board.
+
+
+
+Keep track of where all the Y's are
+*/
 
 /* winning board example:
   [
     ['X', '', 'O'],
     ['', 'X', 'O'],
-    ['', '', 'X'],
+    ['', '',  'X'],
   ];
 
   -- winner in a diagonal
